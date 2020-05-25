@@ -51,6 +51,10 @@ const vehicles = (state = initialState, action) => {
                 error: true
             };
 
+        case Types.DELETE_VEHICLE_DETAIL:
+            return { ...state,
+                vehicleDetail: {}
+            }
         default: return state;
     }
 };
