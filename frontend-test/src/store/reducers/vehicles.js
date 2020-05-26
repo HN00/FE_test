@@ -31,7 +31,11 @@ const vehicles = (state = initialState, action) => {
             return dataVehicles;
 
         case Types.FETCH_All_VEHICLES_FAIL:
-            return {...state, loading: false, vehicles: [], errorSever: true};
+            return {...state, 
+                loading: false, 
+                vehicles: [], 
+                errorSever: true
+            };
 
         case Types.FETCH_VEHICLE_DETAIL_START:
             return {...state, 
@@ -51,6 +55,10 @@ const vehicles = (state = initialState, action) => {
                 error: true
             };
 
+        case Types.DELETE_VEHICLE_DETAIL:
+            return { ...state,
+                vehicleDetail: {}
+            }
         default: return state;
     }
 };

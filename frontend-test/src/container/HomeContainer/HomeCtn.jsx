@@ -3,7 +3,7 @@ import LoadingOverlay from 'react-loading-overlay';
 
 //Redux
 import { connect } from 'react-redux';
-import { actFetchVehiclesRequest, actFetchVehicleDetailRequest, } from './../../store/actions/index';
+import { actFetchVehiclesRequest, actFetchVehicleDetailRequest, actDeleteVehicleDetai, } from './../../store/actions/index';
 
 //Component
 import CustomTable from './../../component/Table/Table';
@@ -17,6 +17,7 @@ const HomeCtn = (props) => {
 
     const { 
         count, 
+        deleteDetailVehicle,
         fetchVehicles, 
         fetchDetailVehicle, 
         next, 
@@ -41,6 +42,7 @@ const HomeCtn = (props) => {
     },[]);
 
     useEffect(() => {
+
         if ( props ) {
             setState( prevState => ({
                 ...prevState,
@@ -53,6 +55,7 @@ const HomeCtn = (props) => {
     }, [props]);
     
     useEffect(() => {
+
         if(isError) {
             setState( prevState => ({
                 ...prevState,
@@ -60,6 +63,7 @@ const HomeCtn = (props) => {
                 isError: true
             }));
         }
+
     },[isError]);
 
     const _handleChangeState = ( key, value ) => {
@@ -83,7 +87,12 @@ const HomeCtn = (props) => {
         fetchVehicles(state.searchString);
         _handleChangeState('searchString', "");        
     };
-    
+
+    const _handleClose = async () => {
+        await deleteDetailVehicle();
+        _handleChangeState("isShowModal", false);
+    }
+
     return(
         <LoadingOverlay
             active={props.loading}
@@ -146,7 +155,7 @@ const HomeCtn = (props) => {
                 }
                 <CustomModal
                     vehicleDetail = { vehicleDetail }
-                    handleClose = { () => _handleChangeState('isShowModal', false)}
+                    handleClose = { _handleClose}
                     isShow = { state.isShowModal }
                     isError = { state.isError }
                 />
@@ -177,6 +186,9 @@ const mapDispatchToProps = (dispatch, props) => {
         fetchDetailVehicle : (url) => {
             dispatch(actFetchVehicleDetailRequest(url));
         },
+        deleteDetailVehicle : () => {
+            dispatch(actDeleteVehicleDetai());
+        }
     }
 }
 

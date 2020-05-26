@@ -82,8 +82,15 @@ export const actFetchVehicleDetailSuccess = (data) => {
         data
     }
 }
+
 export const actFetchVehicleDetailFail = () => {
     return {
         type : Types.FETCH_VEHICLE_DETAIL_FAIL,
+    }
+}
+
+export const actDeleteVehicleDetai = () => {
+    return {
+        type : Types.DELETE_VEHICLE_DETAIL,
     }
 }
