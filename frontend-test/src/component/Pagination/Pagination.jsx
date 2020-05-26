@@ -12,7 +12,11 @@ const CustomPagination = (props) => {
     }
 
     for ( let i = 1; i < maxPage + 1; i++ ) {
-    arrItem.push(<Item disabled = {numberPage === i ? true : false} onClick={handleClick(i)}>{i}</Item>)
+    arrItem.push(<Item 
+                    key = {i}
+                    disabled = {numberPage === i ? true : false} 
+                    onClick={handleClick(i)}>{i}
+                </Item>);
     }
 
     return(

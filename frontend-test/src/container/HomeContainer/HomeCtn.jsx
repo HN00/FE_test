@@ -15,7 +15,17 @@ const { Append, Text } = InputGroup;
 
 const HomeCtn = (props) => {
 
-    const { count, fetchVehicles, fetchDetailVehicle, next, previous,  vehicleDetail, vehicles, isError } = props;
+    const { 
+        count, 
+        fetchVehicles, 
+        fetchDetailVehicle, 
+        next, 
+        previous, 
+        vehicleDetail, 
+        vehicles, 
+        isError, 
+        isErrorSever 
+    } = props;
 
     const [state, setState] = useState({
         numberPage: 0,
@@ -68,11 +78,12 @@ const HomeCtn = (props) => {
         fetchVehicles(page);
     };
 
-    const _handleSearch = () => {        
+    const _handleSearch = () => {
+        if ( state.searchString === "" ) return;
         fetchVehicles(state.searchString);
         _handleChangeState('searchString', "");        
     };
-
+    
     return(
         <LoadingOverlay
             active={props.loading}
@@ -128,7 +139,10 @@ const HomeCtn = (props) => {
                         />
                     </>
                 :
-                    <Alert variant="danger">Not found or have a issues from sever. Please try again!</Alert>
+                isErrorSever === true ? 
+                <Alert variant="danger" style={{textAlign:'center'}}>We have a issues. Please try again!</Alert>
+                :
+                <Alert variant="warning" style={{textAlign:'center'}}>Not found data. Please try again!</Alert>
                 }
                 <CustomModal
                     vehicleDetail = { vehicleDetail }
@@ -150,7 +164,8 @@ const mapStateToProps = state => {
         previous: vehicles.previous,
         loading: vehicles.loading,
         vehicleDetail: vehicles.vehicleDetail,
-        isError: vehicles.error
+        isError: vehicles.error,
+        isErrorSever: vehicles.errorSever
     }
 }
 

@@ -6,6 +6,9 @@ export const actFetchVehiclesRequest = ( data ) => {
         dispatch(actFetchVehiclesStart());
         if (!data) {
             return callApi(`vehicles`, 'GET', null).then(res => {
+                if (res.status !== 200) {
+                    return actFetchVehiclesFail();
+                } 
                 dispatch(actFetchVehiclesSuccess(res.data));
             });
         }
@@ -46,7 +49,7 @@ export const actFetchVehiclesSuccess = (data) => {
     }
 }
 
-export const actFetchVehiclesFail = (data) => {
+export const actFetchVehiclesFail = () => {
     return {
         type : Types.FETCH_All_VEHICLES_FAIL,
     }
